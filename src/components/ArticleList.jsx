@@ -28,7 +28,7 @@ const ArticleList = () => {
     return <p>{error}</p>;
   }
   return (
-    <div>
+    <div className="card-container">
       {articles.map((article) => {
         return <ArticleCard key={article.article_id} article={article} />;
       })}
