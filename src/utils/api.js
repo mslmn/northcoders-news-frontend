@@ -12,3 +12,16 @@ export const getAllArticles = () => {
       return articles;
     });
 };
+
+export const getArticleById = (articleId) => {
+  return fetch(`${baseUrl}/articles/${articleId}`)
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject({ status: res.status, msg: "failed to fetch article" });
+      }
+      return res.json();
+    })
+    .then(({ article }) => {
+      return article;
+    });
+};

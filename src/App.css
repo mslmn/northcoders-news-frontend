@@ -1,16 +1,16 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-/* .card-container {
+.card-container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   border: 1px solid black;
   border-radius: 5px;
-} */
+}
 
 .card-container {
   display: flex;
@@ -29,4 +29,4 @@
   margin: 1em;
   border: 1px solid black;
   border-radius: 5px;
-}
+} */
