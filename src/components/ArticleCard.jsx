@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDate } from "../utils/dateUtils";
 
 const ArticleCard = ({ article }) => {
   return (
@@ -16,7 +17,7 @@ const ArticleCard = ({ article }) => {
           </div>
 
           <div className="justify-end">
-            <span>{article.created_at}</span>
+            <span>{formatDate(article.created_at)}</span>
             <span className="badge badge-outline badge-secondary">{article.topic}</span>
           </div>
         </div>
