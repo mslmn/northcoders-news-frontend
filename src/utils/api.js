@@ -25,3 +25,16 @@ export const getArticleById = (articleId) => {
       return article;
     });
 };
+
+export const getCommentsByArticleId = (articleId) => {
+  return fetch(`${baseUrl}/articles/${articleId}/comments`)
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject({ status: res.status, msg: "failed to fetch article comments" });
+      }
+      return res.json();
+    })
+    .then(({ comments }) => {
+      return comments;
+    });
+};
