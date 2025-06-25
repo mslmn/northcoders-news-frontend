@@ -26,7 +26,7 @@ const ArticleList = () => {
 
   if (loading) {
     return (
-      <div className="pt-20 min-h-screen bg-base-200">
+      <div className="pt-20 min-h-screen">
         <div className="flex flex-col items-center justify-center py-20">
           <span className="loading loading-spinner loading-lg"></span>
           <p className="mt-4">Loading articles...</p>
@@ -44,10 +44,18 @@ const ArticleList = () => {
   }
 
   return (
-    <section className="card-container relative">
-      {articles.map((article) => {
-        return <ArticleCard key={article.article_id} article={article} />;
-      })}
+    <section className="container mx-auto px-4 pt-20 pb-8">
+      <div className="card-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {articles.map((article) => {
+          return (
+            <ArticleCard
+              className="h-full flex flex-col justify-between"
+              key={article.article_id}
+              article={article}
+            />
+          );
+        })}
+      </div>
     </section>
   );
 };
