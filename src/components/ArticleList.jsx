@@ -36,11 +36,11 @@ const ArticleList = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <span className="alert alert-error max-w-md mx-auto mt-10">{error}</span>;
   }
 
   if (!articles || articles.length === 0) {
-    return <p>No articles found</p>;
+    return <span className="alert alert-error max-w-md mx-auto mt-10">No articles found</span>;
   }
 
   return (
