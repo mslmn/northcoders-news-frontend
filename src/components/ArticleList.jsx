@@ -26,9 +26,11 @@ const ArticleList = () => {
 
   if (loading) {
     return (
-      <div>
-        <span className="loading loading-spinner loading-lg"></span>
-        <p>Loading articles...</p>;
+      <div className="pt-20 min-h-screen bg-base-200">
+        <div className="flex flex-col items-center justify-center py-20">
+          <span className="loading loading-spinner loading-lg"></span>
+          <p className="mt-4">Loading articles...</p>
+        </div>
       </div>
     );
   }
