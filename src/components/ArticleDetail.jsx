@@ -3,6 +3,7 @@ import { formatDate } from "../utils/dateUtils";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import CommentsList from "./CommentsList";
+import ArticleVotes from "./ArticleVotes";
 
 const ArticleDetail = () => {
   const { articleId } = useParams();
@@ -25,6 +26,10 @@ const ArticleDetail = () => {
         setError(err.msg);
         setLoading(false);
       });
+  };
+
+  const handleVoteUpdate = (updatedArticle) => {
+    setArticle(updatedArticle);
   };
 
   const handleBackClick = () => {
@@ -97,12 +102,13 @@ const ArticleDetail = () => {
             </div>
 
             <div className="flex gap-4 mb-2 text-sm">
-              <span>
+              <ArticleVotes article={article} onVoteUpdate={handleVoteUpdate} />
+              {/* <span>
                 👍 <strong>{article.votes}</strong> votes
-              </span>
-              <span>
+              </span> */}
+              {/* <span>
                 💬 <strong>{article.comment_count || 0}</strong> comments
-              </span>
+              </span> */}
             </div>
 
             <div className="divider my-2 "></div>

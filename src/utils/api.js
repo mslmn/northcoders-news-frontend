@@ -38,3 +38,22 @@ export const getCommentsByArticleId = (articleId) => {
       return comments;
     });
 };
+
+export const updateArticleVotes = (articleId, incVotes) => {
+  return fetch(`${baseUrl}/articles/${articleId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ inc_votes: incVotes }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject({ status: res.status, msg: "failed to update article votes" });
+      }
+      return res.json();
+    })
+    .then(({ article }) => {
+      return article;
+    });
+};
