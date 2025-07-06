@@ -107,7 +107,7 @@ const ArticleDetail = () => {
                 👍 <strong>{article.votes}</strong> votes
               </span> */}
               {/* <span>
-                💬 <strong>{article.comment_count || 0}</strong> comments
+                💬 <strong>{article.comment_count}</strong> comments
               </span> */}
             </div>
 
