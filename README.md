@@ -52,7 +52,9 @@ npm run build
 
 This app communicates with a RESTful **Express.js** backend:
 
-**Base URL:** [https://nc-news-app-api.onrender.com/api](https://northcoders-news-gida.onrender.com/api)
+**Base URL:** [https://northcoders-news-gida.onrender.com/api](https://northcoders-news-gida.onrender.com/api)
+
+**Repo:** [https://github.com/mslmn/northcoders-news-backend](https://github.com/mslmn/northcoders-news-backend)
 
 Example endpoints:
 
@@ -60,3 +62,7 @@ Example endpoints:
 - `GET /articles/:article_id`
 - `GET /topics`
 - `POST /articles/:article_id/comments`
+
+---
+
+This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by [Northcoders](https://northcoders.com/)
