@@ -1,62 +1,88 @@
-import { getAllArticles } from "../utils/api";
 import { useEffect, useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
+import { getAllArticles } from "../utils/api";
 import ArticleCard from "./ArticleCard";
+import ArticleCardSkeleton from "./ArticleCardSkeleton";
+import ArticlesFilterSidebar from "./ArticlesFilterSidebar";
+
+let LAST_LIST = null;
 
 const ArticleList = () => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState(LAST_LIST || []);
+  const [loading, setLoading] = useState(!LAST_LIST);
   const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
+
+  const topic = searchParams.get("topic") || "";
+  const sort_by = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
-    loadArticles();
-  }, []);
+    setError(null);
+    setLoading(articles.length === 0);
 
-  const loadArticles = () => {
-    setLoading(true);
-    getAllArticles()
-      .then((articlesData) => {
-        setArticles(articlesData);
-        setLoading(false);
+    getAllArticles({ topic, sort_by, order })
+      .then((list) => {
+        setArticles(list);
+        LAST_LIST = list;
       })
-      .catch((err) => {
-        setError(err.msg);
-        setLoading(false);
-      });
-  };
+      .catch((e) => setError(e?.msg || "Failed to fetch articles"))
+      .finally(() => setLoading(false));
+    // eslint-disable-next-line
+  }, [topic, sort_by, order]);
 
-  if (loading) {
-    return (
-      <div className="pt-20 min-h-screen">
-        <div className="flex flex-col items-center justify-center py-20">
-          <span className="loading loading-spinner loading-lg"></span>
-          <p className="mt-4">Loading articles...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <span className="alert alert-error max-w-md mx-auto mt-10">{error}</span>;
-  }
-
-  if (!articles || articles.length === 0) {
-    return <span className="alert alert-error max-w-md mx-auto mt-10">No articles found</span>;
-  }
+  const resultText = `${articles.length} article${articles.length !== 1 ? "s" : ""}${
+    topic ? ` in “${topic}”` : ""
+  }`;
 
   return (
-    <section className="container mx-auto px-4 pt-20 pb-8">
-      <div className="card-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {articles.map((article) => {
-          return (
-            <ArticleCard
-              className="h-full flex flex-col justify-between"
-              key={article.article_id}
-              article={article}
-            />
-          );
-        })}
+    <div className="drawer lg:drawer-open pt-20">
+      <input id="filters-drawer" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between mb-3">
+            <h1 className="text-2xl md:text-3xl font-bold">Articles</h1>
+            <label htmlFor="filters-drawer" className="btn btn-outline btn-sm lg:hidden">
+              Filters
+            </label>
+          </div>
+          <p className="text-sm opacity-70 mb-4">{resultText}</p>
+
+          {loading ? (
+            <div className="grid-auto-cards gap-7 items-stretch">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <ArticleCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : error ? (
+            <div className="alert alert-error mt-2">
+              <span>{error}</span>
+            </div>
+          ) : articles.length === 0 ? (
+            <div className="card bg-base-100 shadow-sm">
+              <div className="card-body items-center text-center">
+                <h3 className="card-title">No results</h3>
+                <p className="opacity-70">Try changing topic, sort, or order.</p>
+                <Link to="/articles" className="btn btn-sm btn-ghost mt-2">
+                  Reset filters
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="grid-auto-cards gap-7 items-stretch">
+              {articles.map((a) => (
+                <ArticleCard key={a.article_id} article={a} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </section>
+
+      <div className="drawer-side">
+        <label htmlFor="filters-drawer" className="drawer-overlay" />
+        <ArticlesFilterSidebar />
+      </div>
+    </div>
   );
 };
 
