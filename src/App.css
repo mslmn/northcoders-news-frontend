@@ -3,30 +3,4 @@
   margin: 0 auto;
   padding: 2rem;
 }
-
-.card-container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-.article-card {
-  flex: 0 1 calc(25% - 1em);
-  box-sizing: border-box;
-  max-width: fit-content;
-  max-height: fit-content;
-  padding: 2em;
-  margin: 1em;
-  border: 1px solid black;
-  border-radius: 5px;
-} */
+ */
